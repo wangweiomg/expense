@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="helloWorldServiceImpl"
+		class="com.iss.expense.demo.chapter6.service.impl.HelloWorldServiceImpl" />
+
+	<bean id="aspect" class="com.iss.expense.demo.chapter6.aop.HelloWorldAspect" />
+	<bean id="beforeAdvice" class="com.iss.expense.demo.chapter6.aop.BeforeAdviceImpl"/>
+	<!-- <aop:config>
+		<aop:pointcut id="pointcut"
+			expression="execution(* com..*.*(..)) and args(param)" />
+		<aop:aspect ref="aspect">
+			<aop:before pointcut-ref="pointcut" method="beforeAdvice(java.lang.String)" />
+			<aop:after pointcut="execution(* com..*.*(..))" method="afterFinalAdvice" />
+			<aop:after-returning pointcut="execution(* com..*.sayAfterReturning(..))"
+				method="afterReturningAdvice" arg-names="retVal" returning="retVal" />
+			<aop:after-throwing pointcut="execution(* com..*.sayAfterThrowing(..))" 
+			method="afterThrowingAdvice" arg-names="exp" throwing="exp"/>
+			<aop:around pointcut="execution(* com..*.sayAround(..))"
+			 	method="aroundAdvice"/>
+			<aop:declare-parents types-matching="com..*.IHelloWorldService+" 
+				implement-interface="com.iss.expense.demo.chapter6.service.IIntroductionService"
+				default-impl="com.iss.expense.demo.chapter6.service.impl.IntroductionServiceImpl"/>
+		</aop:aspect>
+	</aop:config> -->
+	<aop:config>
+		<aop:advisor pointcut="execution(* com..*.sayAdvisorBefore(..))" advice-ref="beforeAdvice"/>
+	</aop:config>
+</beans>  

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+
+	<!-- 指定默认编码集 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- 当struts配置文件修改时是否自动加载 -->
+	<constant name="struts.configuration.xmlreload" value="true" />
+	<!-- 开发模式下打印详细的错误信息 -->
+	<constant name="struts.devMode" value="true" />
+
+	<constant name="struts.ui.theme" value="xhtml" />
+
+	<package name="struts" extends="struts-default">
+		<!-- <interceptors>
+			自定义拦截器
+			签名验证
+			<interceptor name="signature" class="com.iss.cbc.lottery.filter.SignatureInterceptor" />
+			<interceptor name="myexceptionInterceptor" class="com.iss.cbc.lottery.base.ExceptionInterceptor"/>
+
+			自定义拦截器栈
+			<interceptor-stack name="mydefaultStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="signature"/>
+				<interceptor-ref name="myexceptionInterceptor"/>
+			</interceptor-stack>
+		</interceptors> -->
+		<default-interceptor-ref name="mydefaultStack"/>
+		<!-- 配置错误页面 -->
+		<!-- <default-action-ref name="error"/>
+		<action name="error"  class="com.iss.cbc.lottery.exception.action.ErrorPageAction" /> -->
+	</package>
+	<include file="config/struts-config/struts-user.xml"/>
+</struts>    

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="listBean" class="com.iss.expense.demo.chapter3.bean.ListTestBean">
+		<property name="values">
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="setBean" class="com.iss.expense.demo.chapter3.bean.ListTestBean">
+		<property name="values2">
+			<set>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+			</set>
+		</property>
+	</bean>
+	<bean id="arrayBean1" class="com.iss.expense.demo.chapter3.bean.ArrayTestBean">
+		<property name="array">
+			<array merge="default" value-type="java.lang.String">
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+			</array>
+		</property>
+		<property name="array2">
+			<array>
+				<array>
+					<value>4</value>
+					<value>5</value>
+					<value>6</value>
+				</array>
+				<array>
+					<value>7</value>
+					<value>8</value>
+					<value>9</value>
+				</array>
+			</array>
+		</property>
+	</bean>
+	<bean id="mapBean" class="com.iss.expense.demo.chapter3.bean.MapTestBean">
+		<property name="values">
+			<map>
+				<entry>
+					<key>
+						<value>phone</value>
+					</key>
+					<value>12358</value>
+				</entry>
+				<entry>
+					<key>
+						<value>password</value>
+					</key>
+					<value>123456</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="propertiesBean" class="com.iss.expense.demo.chapter3.bean.PropertiesTestBean">
+		<property name="values">
+			<props value-type="int" merge="default">
+				<prop key="1">1ddd</prop>
+				<prop key="2">2</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="propertiesBean2" class="com.iss.expense.demo.chapter3.bean.PropertiesTestBean">
+		<property name="values">
+			<value>
+				1=11
+				2=22s;
+				3=33F,
+				4=44
+			</value>
+		</property>
+	</bean>
+	<bean  class="com.iss.expense.demo.chapter2.HelloImpl"/>
+	<!-- 装配首选 -->
+	<bean  class="com.iss.expense.demo.chapter2.HelloImpl" primary="true"/>
+	<bean id="helloDecorator" class="com.iss.expense.demo.chapter3.bean.HelloApiDecorator" 
+		autowire="constructor"/>
+	<bean id="c" class="com.iss.expense.demo.chapter3.bean.NavigationC"/>
+	<bean id="b" class="com.iss.expense.demo.chapter3.bean.NavigationB">
+		<property name="list">
+			<list></list>
+		</property>
+		<property name="map">
+			<map></map>
+		</property>
+		<property name="properties">
+			<props></props>
+		</property>
+	</bean>
+	<bean id="a" class="com.iss.expense.demo.chapter3.bean.NavigationA">
+		<!-- 首先注入navigatioinB确保它非空 -->
+		<property name="navigationB" ref="b"/>
+		<!-- 对象图导航注入 -->
+		<property name="navigationB.navigationC" ref="c"/>
+		<!-- 注入列表数据类型数据 -->
+		<property name="navigationB.list[0]" ref="c"/>
+		<!-- 注入map类型数据 -->
+		<property name="navigationB.map[key]" ref="c"/>
+		<!-- 注入properties类型数据 -->
+		<property name="navigationB.properties[0]" ref="c"/>
+		<!-- 注入properties类型数据 -->
+		<property name="navigationB.properties[1]" ref="c"/>
+		<!-- 注入数组类型数据，注意不能越界 -->
+		<property name="navigationB.array[0]" ref="c"/>		
+	</bean>	
+	<bean id="bean1" class="java.lang.String">
+		<constructor-arg index="0" value="test"/>
+	</bean>
+	<bean id="idrefBean1" class="com.iss.expense.demo.chapter3.bean.NameSpaceBean" p:id="value"/>
+	<bean id="idrefBean2" class="com.iss.expense.demo.chapter3.bean.NameSpaceBean" p:id-ref="bean1"/>
+	<!-- <bean id="circleA" class="com.iss.expense.demo.chapter3.bean.CircleA">
+		<constructor-arg index="0" ref="circleB"/>
+	</bean>
+	<bean id="circleB" class="com.iss.expense.demo.chapter3.bean.CircleB">
+		<constructor-arg index="0" ref="circleC"/>
+	</bean>
+	<bean id="circleC" class="com.iss.expense.demo.chapter3.bean.CircleC">
+		<constructor-arg index="0" ref="circleA"/>
+	</bean> -->
+	<bean id="circleA" class="com.iss.expense.demo.chapter3.bean.CircleA" scope="prototype">
+		<property name="circleB" ref="circleB"/>
+	</bean>
+	<bean id="circleB" class="com.iss.expense.demo.chapter3.bean.CircleB" scope="prototype">
+		<property name="circleC" ref="circleC"/>
+	</bean>
+	<bean id="circleC" class="com.iss.expense.demo.chapter3.bean.CircleC" scope="prototype">
+		<property name="circleA" ref="circleA"/>
+	</bean>
+	<bean id="resourceBean" class="com.iss.expense.demo.chapter3.bean.ResourceBean"
+		init-method="init" destroy-method="destroy">
+		<property name="file" value="d:/test.txt"></property>
+	</bean>
+	<bean id="dependentBean" class="com.iss.expense.demo.chapter3.bean.DependentBean"
+		init-method="init" destroy-method="destroy" depends-on="resourceBean">
+		<property name="resourceBean" ref="resourceBean"/>
+	</bean>
+	
+	<bean id="prototypePrinter" class="com.iss.expense.demo.chapter3.bean.Printer"
+		scope="prototype"/>
+	<bean id="singletonPrinter" class="com.iss.expense.demo.chapter3.bean.Printer"
+		scope="singleton"/>
+	<bean id="helloApi1" class="com.iss.expense.demo.chapter3.bean.HelloImpl5"
+		scope="singleton">
+		<property name="printer" ref="prototypePrinter"/>
+		<lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>	
+		<lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>	
+	</bean>	
+	<bean id="helloApi2" class="com.iss.expense.demo.chapter3.bean.HelloImpl5"
+		scope="prototype">
+		<property name="printer" ref="prototypePrinter"/>
+		<lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>	
+		<lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>	
+	</bean>	
+	
+	<bean id="replacer" class="com.iss.expense.demo.chapter3.bean.PrinterReplacer"/>
+	<bean id="printer" class="com.iss.expense.demo.chapter3.bean.Printer">
+		<replaced-method name="print" replacer="replacer">
+			<arg-type>java.lang.String</arg-type>
+		</replaced-method>
+	</bean>
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry>
+					<!-- 指定 scope 关键字 -->
+					<key>
+						<value>thread</value>
+					</key>
+					<!-- scope 实现 -->
+					<bean class="com.iss.expense.demo.chapter3.ThreadScope"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="helloApi" class="com.iss.expense.demo.chapter2.HelloImpl"
+		scope="thread"/>
+</beans>  

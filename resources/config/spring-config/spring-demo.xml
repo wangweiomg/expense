@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="hello" class="com.iss.expense.demo.chapter2.HelloImpl"/>
+	<bean id="helloImpl4" class="com.iss.expense.demo.HelloImpl4">
+		<property name="message" value="Hello world"/>
+		<property name="index">
+			<value>4</value>
+		</property>
+	</bean>
+	<bean id="booleanBean1" class="com.iss.expense.demo.BooleanTestBean" >
+		<property name="success" value="on"/>
+	</bean>
+	<bean id="booleanBean2" class="com.iss.expense.demo.BooleanTestBean" >
+		<property name="success" value="true"/>
+	</bean>
+	<bean id="booleanBean3" class="com.iss.expense.demo.BooleanTestBean" >
+		<property name="success" value="0"/>
+	</bean>
+	<bean id="booleanBean4" class="com.iss.expense.demo.BooleanTestBean" >
+		<property name="success" value="yes"/>
+	</bean>
+	<bean id="instanceFactory" class="com.iss.expense.demo.DependencyInjectByInstanceFactory" />
+	<bean id="byIndex" factory-bean="instanceFactory" factory-method="newInstance">
+		<constructor-arg index="0" value="Hello World!"/>
+		<constructor-arg index="1" value="1"/>
+	</bean>
+	<bean id="byType" factory-bean="instanceFactory" factory-method="newInstance">
+		<constructor-arg type="java.lang.String" value="Hello World"/>
+		<constructor-arg type="int" value="2"/>
+	</bean>
+	<bean id="byName" factory-bean="instanceFactory" factory-method="newInstance">
+		<constructor-arg name="message" value="Jack jouns"/>
+		<constructor-arg name="index" value="3"/>
+	</bean>
+	<bean name="bean3" class="com.iss.expense.demo.HelloApiStaticFactory" factory-method="newInstance">
+		<constructor-arg index="0" value="Hello spring!"/>
+	</bean>
+	<!-- 定义实例工厂Bean -->
+	<bean id="beanInstanceFactory" class="com.iss.expense.demo.HelloApiInstanceFactory"/>
+	<!-- 使用实例工厂Bean创建Bean -->
+	<bean id="bean4" factory-bean="beanInstanceFactory" factory-method="newInstance">
+		<constructor-arg index="0" value="Hello world!"></constructor-arg>
+	</bean>	
+	<bean id="propertiesBean" class="com.iss.expense.demo.chapter3.bean.PropertiesTestBean">
+		<property name="values">
+			<props value-type="int" merge="default">
+				<prop key="1">1ddd</prop>
+				<prop key="2">2</prop>
+			</props>
+		</property>
+	</bean>
+</beans>  

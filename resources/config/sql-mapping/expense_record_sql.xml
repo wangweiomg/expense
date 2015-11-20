@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="expense.record">
+
+	<resultMap type="expenseRecord" id="expenseRecordResult" >
+		<result column="TID" property="tid" javaType="java.lang.Integer"/>
+		<result column="USER_ID" property="userId" javaType="java.lang.Integer"/>
+		<result column="CREATE_TIME" property="createTime" javaType="java.util.Date"/>
+		<result column="BREAKFAST" property="breakfast" javaType="java.lang.Double"/>
+		<result column="LUNCH" property="lunch" javaType="java.lang.Double"/>
+		<result column="DINNER" property="dinner" javaType="java.lang.Double"/>
+		<result column="SNACK" property="snack" javaType="java.lang.Double"/>
+		<result column="CLOTHES" property="clothes" javaType="java.lang.Double"/>
+		<result column="RENT" property="rent" javaType="java.lang.Double"/>
+		<result column="WATER_GAS_FEE" property="waterGasFee" javaType="java.lang.Double"/>
+		<result column="DAILY_SUPPLIES" property="dailySuppliles" javaType="java.lang.Double"/>
+		<result column="HOME_FURNISHING" property="homeFurnishing" javaType="java.lang.Double"/>
+		<result column="HOME_REPAIR" property="homeRepair" javaType="java.lang.Double"/>
+		<result column="TRAFFIC" property="traffic" javaType="java.lang.Double"/>
+		<result column="TELECOM" property="telecom" javaType="java.lang.Double"/>
+		<result column="POST" property="post" javaType="java.lang.Double"/>
+		<result column="LEARN" property="learn" javaType="java.lang.Double"/>
+		<result column="PERSONAL_DIGITAL" property="personalDigital" javaType="java.lang.Double"/>
+		<result column="HAVE_FUN" property="havaFun" javaType="java.lang.Double"/>
+		<result column="MEDICAL" property="medical" javaType="java.lang.Double"/>
+		<result column="FITNESS" property="fitness" javaType="java.lang.Double"/>
+		<result column="COMMUNICATION" property="communitation" javaType="java.lang.Double"/>
+		<result column="FINANCE_INSURANCE" property="financeInsurance" javaType="java.lang.Double"/>
+		<result column="OTHER" property="other" javaType="java.lang.Double"/>
+		<result column="REMARK" property="remark" javaType="java.lang.Double"/>
+	</resultMap>
+	
+	<!-- 根据用户id查询消费记录集合 -->
+	<select id="queryRecordByUserId" parameterType="String" resultMap="expenseRecordResult">
+		SELECT TID, USER_ID,CREATE_TIME, BREAKFAST,LUNCH, DINNER, SNACK, CLOTHES, RENT, WATER_GAS_FEE, DAILY_SUPPLIES, 
+				HOME_FURNISHING, HOME_REPAIR, TRAFFIC, TELECOM, POST, LEARN, PERSONAL_DIGITAL, HAVE_FUN, TRAVEL, MEDICAL, 
+				FITNESS, COMMUNICATION, FINANCE_INSURANCE, OTHER, REMARK FROM t_expense_record
+		WHERE USER_ID = #{userId}
+	</select>
+</mapper>
