@@ -7,6 +7,8 @@ package com.iss.expense.demo.chapter2;
  * @version	v1.0
  */
 public class BooleanTestBean {
+	
+	
 	private boolean success;
 	public void setSuccess(boolean success){
 		this.success = success;
